@@ -1,2 +1,71 @@
-.App {
+.slideshow {
+  max-width: 1200px;
+  overflow-x: hidden;
+  position: relative;
+  &__carousel {
+    display: flex;    
+  }
+  &__slide-holder {
+    background-color: rgb(150, 161, 177);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 500px ;
+    min-width: 100%;
+    transition:all ease-in-out 1s;
+  }
+  &__button {
+    cursor: pointer;
+    top: 0%;
+    bottom: 50%;
+    width: 20%;
+    position: absolute;
+    transition:background-color ease-in-out 0.3s;
+    @media (min-width: 768px) {
+      bottom: 0;
+    }
+    &--left {
+      left: 0px;
+    }
+    &--right {
+      right: 0px;
+    }
+    svg {
+      position: absolute;
+      top: 50%;
+      left: calc(50% - 16px);
+      transform: scale(4);
+      color: rgba(255,255,255,1);
+    }
+    &:hover {
+      background-color:rgba(255,255,255,0.5);
+    }
+  }
+  .positionIndicatorContainer {
+    position: relative;
+    top: -30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 20px;
+    @media (min-width: 768px) {
+      justify-content: center;
+      margin-right: 0;
+    }
+  }
+  .positionIndicatorContainerFlex {
+    display: flex;
+    align-items: center;
+  }
+  .positionIndicator {
+    width: 10px;
+    height: 10px;
+    margin: 2px;
+    background: rgba(125,125,125,1);
+    &--active {
+      border: 2px solid white;
+    }
+  }
+  
 }
+
