@@ -10,16 +10,16 @@ const App = ({slideToStart, direction}) => {
 
   return (
     <div className="App">
-      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} images={images} /></div>
-      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} images={images} /></div>
-      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} images={images} /></div>
+      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} initialImages={images} /></div>
+      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} initialImages={images} /></div>
+      <div><SlideShow initialSlide={slideToStart || 1} direction={direction} initialImages={images} /></div>
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    direction : state.direction,
+    direction    : state.direction,
     slideToStart : state.slideToStart
   }
 }

@@ -5,16 +5,18 @@ import {SvgArrowLeft} from './icons/ArrowLeft';
 import {SvgArrowRight} from './icons/ArrowRight';
 import './App.scss';
 
-const SlideShow = ({initialSlide, images, direction, dispatch}) => {
+const SlideShow = ({initialSlide, initialImages, direction, dispatch}) => {
 
   const imgCtx = require.context('./assets/', true);
   const [slide, setSlide] = useState(initialSlide);
   const [doLoop, setLoop] = useState(false);
+  const [images, setImages] = useState(initialImages);
+  const useMountEffect = (fun) => useEffect(fun, [])
   
   // duplicate the first image to make the infinite scroll seamless
-  useEffect(() => {
-    images.push(images[0]);
-  }, [images]);
+  useMountEffect(() => {
+    setImages([...images,images[0]]);
+  });
 
   // after rendering first or last slide we move the window to enable infinite scroll
   useEffect(() => {
@@ -29,7 +31,7 @@ const SlideShow = ({initialSlide, images, direction, dispatch}) => {
   }, [doLoop, images]);
 
 
-  const moveSlides = (direction) => {
+  const moveSlides = (direction, slide) => {
     switch(direction) {
       case 'left' : if (slide === images.length ) { setLoop('forward') } setSlide( ((slide) % images.length) + 1 ); break;
       case 'right': if (slide === 1 ) { setLoop('backward') } setSlide( slide - 1 === 0 ? images.length : slide - 1 );  break;
@@ -39,10 +41,11 @@ const SlideShow = ({initialSlide, images, direction, dispatch}) => {
 
   // animate to preset slide if the prop is set
   useEffect(()=>{
+    console.log(images.length);
     if(initialSlide) {
       setSlide(initialSlide);
       switch(direction) {
-        case 'left' : if (initialSlide === images.length ) { setLoop('forward') } setSlide( ((initialSlide) % images.length) + 1 ); break;
+        case 'left' : if (initialSlide === images.length  ) { setLoop('forward') } setSlide( ((initialSlide) % images.length) + 1 ); break;
         case 'right': if (initialSlide === 1 ) { setLoop('backward') } setSlide( initialSlide - 1 === 0 ? images.length : initialSlide - 1 );  break;
         default: return;
       }
@@ -53,7 +56,7 @@ const SlideShow = ({initialSlide, images, direction, dispatch}) => {
 
 
   // event handler for slide button click
-  const handleMoveSlides = (direction) => {
+  const handleMoveSlides = (direction, slide) => {
 
     if(dispatch) {
       dispatch({
@@ -61,10 +64,9 @@ const SlideShow = ({initialSlide, images, direction, dispatch}) => {
         slideToStart: slide,
         direction: direction
       }); // dispatch slideshow components state to global reducer
-    }
-
-    moveSlides(direction);
-
+      return;
+    } 
+    moveSlides(direction, slide);
   }
 
   return (
@@ -85,8 +87,8 @@ const SlideShow = ({initialSlide, images, direction, dispatch}) => {
           }
         )}
       </div>
-      <div className="slideshow__button slideshow__button--left" onClick={()=>{handleMoveSlides('right')}}> <SvgArrowLeft /> </div>
-      <div className="slideshow__button slideshow__button--right" onClick={()=>{handleMoveSlides('left')}}> <SvgArrowRight /> </div>
+      <div className="slideshow__button slideshow__button--left" onClick={()=>{handleMoveSlides('right', slide)}}> <SvgArrowLeft /> </div>
+      <div className="slideshow__button slideshow__button--right" onClick={()=>{handleMoveSlides('left', slide)}}> <SvgArrowRight /> </div>
       <PositionIndicator number={images.length-1} position={slide} />
     </div>
   )
