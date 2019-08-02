@@ -19,5 +19,7 @@ The redux part works like this:
  BUG - rather than do an infinite scroll when the slideshows are connected to a reducer they do loop, but by rewinding the slide
  carousel rather than seamlessly scrolling to the first slide, I'm sure this is fixable but have run out of time.
 
+todo: add proptypes
+
 James
 

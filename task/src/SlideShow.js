@@ -94,10 +94,6 @@ const SlideShow = ({initialSlide, initialImages, direction, dispatch}) => {
   )
 }
 
-
-// prevSlide: () => dispatch({type:'PREV_SLIDE'}),
-// nextSlide: () => dispatch({type:'NEXT_SLIDE'})
-
 const SlideShowContainer = connect()(SlideShow)
 
 export default SlideShowContainer;
