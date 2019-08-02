@@ -1,23 +1,12 @@
-Hi
+The slideshow component is standalone and can work without redux. As requested the slideshow infinitely scrolls (loop).
 
-As per advice I didn't do it all because it was the weekend but I can on Monday do the flux/redux part to sync the gallaries.
+It can be connected to a reducer using react-redux connect method, when it will be passed a dispatch method. If the dispatch method exists it will defer control to the reducer allowing you to sync it to the other slideshows on the page.
 
-I'll also tidy up the code a little bit and add any missing useful comments.
+The redux part works a little differently:
 
-The redux part works like this:
+  - Because the animations will not run if we simply update the app on state changes (b/cos the parent component 're-renders') so instead of passing the current slide to show we pass in an 'initial slide' and a 'direction' (both stored in redux store)
+  - After the first render we use the useEffect hook and animate from 'initial slide' in the direction the user clicked, taking us to the correct 'current slide' but giving the appearance of seamless animation from the previous slide.
+  - First slide and direction are by default, slide 1 and null for direction.
+  - This means we get the animation properly running and the slideshows *stay in sync*
 
-  - Because the animations will not run if we simply update the app on state changes then instead we pass in an 'initial slide' and a 'direction' (stored in redux store)
-  - On first render these are by default, slide 1 and null for direction.
-  - If the slideshow component is wrapped by the react-redux connect function then it will have 
-  a dispatch property to update the redux store. 
-  - If this is present then on the left/right button clicks the store's value for 'initial slide' and 'direction' are updated.
-  - The app then rerenders when the propeties update (rerendering all three slideshows) n.b. this is only a virtual rerender.
-  - we use a useEffect hook which runs after render to move the slideshow on in the direction that is stored in the redux store.
-  
- *this means we get the animation properly running and the slideshows stay in sync*
-
- BUG - rather than do an infinite scroll when the slideshows are connected to a reducer they do loop, but by rewinding the slide
- carousel rather than seamlessly scrolling to the first slide, I'm sure this is fixable but have run out of time.
-
-James
 
