@@ -8,5 +8,7 @@ The redux part works a little differently:
   - After the first render we use the useEffect hook and animate from 'initial slide' in the direction the user clicked, taking us to the correct 'current slide' but giving the appearance of seamless animation from the previous slide.
   - First slide and direction are by default, slide 1 and null for direction.
   - This means we get the animation properly running and the slideshows *stay in sync*
-
+ 
+ ### note:
+ mobile/responsive breakpoint settings are in /src/App.scss
 
